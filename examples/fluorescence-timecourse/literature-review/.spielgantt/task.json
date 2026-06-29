@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "id": "literature-review",
+  "ends_at": "Protocol selected",
+  "dependencies": [
+    "Chart"
+  ],
+  "status": "done"
+}

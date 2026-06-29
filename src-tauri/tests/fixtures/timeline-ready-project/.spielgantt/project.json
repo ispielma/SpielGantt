@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "folder_naming": "task_id",
+  "events": [
+    "Workflow started",
+    "Protocol selected",
+    "Samples ready",
+    "Fluorescence captured",
+    "Analysis complete"
+  ]
+}

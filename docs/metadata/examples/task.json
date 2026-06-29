@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "id": "calibrate-laser",
+  "ends_at": "BEC",
+  "status": "unblocked"
+}

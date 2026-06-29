@@ -1,0 +1,53 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Capability for the main window",
+  "windows": ["main"],
+  "permissions": [
+    "core:default",
+    "core:window:allow-current-monitor",
+    "core:window:allow-inner-size",
+    "core:window:allow-outer-position",
+    "core:window:allow-outer-size",
+    "core:window:allow-scale-factor",
+    "core:window:allow-set-position",
+    "core:window:allow-set-size",
+    "core:window:allow-set-size-constraints",
+    "core:window:allow-set-title",
+    "dialog:default",
+    "opener:default",
+    {
+      "identifier": "shell:allow-execute",
+      "allow": [
+        {
+          "name": "spielgantt-trash-macos",
+          "cmd": "osascript",
+          "args": [
+            "-e",
+            "on run argv",
+            "-e",
+            "set targetPath to item 1 of argv",
+            "-e",
+            "tell application \"Finder\" to delete (POSIX file targetPath as alias)",
+            "-e",
+            "end run",
+            { "validator": "^.+$" }
+          ]
+        },
+        {
+          "name": "spielgantt-trash-windows",
+          "cmd": "powershell.exe",
+          "args": [
+            "-NoProfile",
+            "-NonInteractive",
+            "-ExecutionPolicy",
+            "Bypass",
+            "-Command",
+            "Add-Type -AssemblyName Microsoft.VisualBasic; [Microsoft.VisualBasic.FileIO.FileSystem]::DeleteDirectory( $args[0], [Microsoft.VisualBasic.FileIO.UIOption]::OnlyErrorDialogs, [Microsoft.VisualBasic.FileIO.RecycleOption]::SendToRecycleBin )",
+            { "validator": "^.+$" }
+          ]
+        }
+      ]
+    }
+  ]
+}

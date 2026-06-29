@@ -1,0 +1,23 @@
+# Rust
+target/
+src-tauri/target/
+
+# Node and frontend
+node_modules/
+dist/
+.vite/
+.turbo/
+
+# Editor and OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Local development agent skills
+.agents/skills/
+
+# Cache and logs
+.cache/
+coverage/
+*.log

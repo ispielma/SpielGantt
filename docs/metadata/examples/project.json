@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "folder_naming": "task_id",
+  "events": [
+    "START",
+    "MOT",
+    "BEC"
+  ],
+  "boundary_events": {
+    "start": "START",
+    "finish": "BEC"
+  }
+}

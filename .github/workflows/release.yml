@@ -1,0 +1,69 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  macos-app:
+    name: Build macOS app
+    runs-on: macos-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: Run frontend tests
+        run: npm run test:frontend
+
+      - name: Run release tests
+        run: npm run test:release
+
+      - name: Run architecture guard
+        run: npm run test:architecture
+
+      - name: Build frontend
+        run: npm run build
+
+      - name: Run Rust tests
+        run: cargo test --manifest-path src-tauri/Cargo.toml
+
+      - name: Build release CLI
+        run: cargo build --release --manifest-path src-tauri/Cargo.toml --bin spielgantt
+
+      - name: Build Tauri app
+        run: npm run tauri -- build --bundles app
+
+      - name: Build macOS DMG installer
+        run: npm run release:dmg
+
+      - name: Verify release artifact
+        run: npm run release:verify -- --app src-tauri/target/release/bundle/macos/SpielGantt.app
+
+      - name: Upload workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: SpielGantt-macos-dmg
+          path: src-tauri/target/release/bundle/dmg/SpielGantt_*.dmg
+          if-no-files-found: error
+
+      - name: Upload GitHub release asset
+        uses: softprops/action-gh-release@v2
+        with:
+          files: src-tauri/target/release/bundle/dmg/SpielGantt_*.dmg

@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "id": "prepare-samples",
+  "ends_at": "Samples ready",
+  "dependencies": [
+    "Protocol selected"
+  ],
+  "status": "blocked"
+}

@@ -1,0 +1,40 @@
+{
+  "name": "spielgantt",
+  "private": true,
+  "version": "1.0.0-rc.1",
+  "license": "PolyForm-Noncommercial-1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "release:build": "npm run build && cargo build --release --manifest-path src-tauri/Cargo.toml --bin spielgantt && npm run tauri -- build --bundles app && npm run release:dmg && npm run release:verify",
+    "release:dmg": "node scripts/package-macos-dmg.mjs",
+    "release:verify": "node scripts/verify-release.mjs",
+    "test:architecture": "node scripts/check-architecture.mjs",
+    "test:release": "node --test tests/release-packaging.test.mjs",
+    "test:frontend": "node --import tsx --test tests/native-window-bounds.test.ts tests/native-window-layout.test.ts tests/remembered-projects.test.ts tests/project-action-model.test.ts tests/project-session-owner.test.ts tests/sidebar-navigator-model.test.ts tests/workspace-selection-model.test.ts tests/frontend-smoke.test.ts tests/frontend-workflows.test.ts tests/sidebar-project-actions.test.ts tests/project-tree-interactions.test.ts tests/project-trash.test.ts tests/timeline.test.ts tests/react-root-mount.test.tsx tests/overlay-mutation-workflows.test.ts tests/task-dialogs.test.ts tests/task-inspector-react.test.tsx",
+    "tauri": "tauri"
+  },
+  "dependencies": {
+    "@mantine/core": "^9.3.1",
+    "@mantine/hooks": "^9.3.1",
+    "@tabler/icons-react": "^3.44.0",
+    "@tauri-apps/api": "^2",
+    "@tauri-apps/plugin-dialog": "^2.7.1",
+    "@tauri-apps/plugin-opener": "^2",
+    "@tauri-apps/plugin-shell": "^2.3.5",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.2",
+    "happy-dom": "^20.10.3",
+    "tsx": "^4.22.4",
+    "typescript": "~5.6.2",
+    "vite": "^8.0.16"
+  }
+}
